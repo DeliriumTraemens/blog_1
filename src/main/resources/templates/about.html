@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text = ${title} />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet"href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <!--    <link rel="stylesheet"href="bootstrap.css"/>-->
+</head>
+
+<body>
+
+<header th:insert="blocks/header :: header"></header>
+
+<div class="container mt-5">
+    <h1   th:text="'Привет, ' + ${title} + '!'"/>
+</div>
+
+
+<div th:each = "elem : ${posts}">
+
+    <h3 th:text="${elem.title}" />
+    <p th:text="${elem.anons}"/>
+    <!--        <a th:href="'/blog-main/' + ${elem.id}">Детальнее</a>-->
+
+</div>
+
+<!--<a class="p-2 text-dark" a href="/home">На главную</a>-->
+<p>Get your greeting <a href="/"> На главную </a></p>
+
+<footer th:insert="blocks/footer :: footer"></footer>
+
+
+</body>
+
+</html>
