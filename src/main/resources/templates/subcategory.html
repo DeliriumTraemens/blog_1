@@ -13,6 +13,33 @@
 
 <!--Тушка-->
 
+<!--<h1>Категории</h1>-->
+<h1 th:text = ${title}></h1>
+<h2 th:text=${zagolovok}></h2>
+
+<div class="container mt-5">
+
+
+    <div th:each="el:${subcategories}" class="bg-warning mt-3 " >
+
+        <!--        <a th:href="'/category/' + ${el.id}">-->
+
+        <h5 th:text="${el.id}" />
+        <h5 th:text="${el.name}" /><br/>
+        <p>Номер родительской категории</p>
+        <h5 th:text="${el.parentId}" />
+        <p th:text="${el.description}" />
+        <a th:href="'/category/' + ${el.id}" class="=btn btn-sm btn-info">Детальнее</a>
+        <a th:href="'/subcategory/' + ${el.id}" class="=btn btn-sm btn-info">Субкатегории</a>
+
+        <!--        </a>-->
+
+
+    </div>
+
+
+
+</div>
 
 
 

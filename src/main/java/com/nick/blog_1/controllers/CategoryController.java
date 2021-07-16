@@ -77,8 +77,8 @@ public class CategoryController
 //	Optional<Category> categ =categoryRepository.findById(id);
 			Iterable<Category> subCategories =categoryRepository.findByParentId(id);//STOPPED HERE
 			ArrayList<Category> rescats = new ArrayList<>();
-			subCategories.(rescats :: add);
-			model.addAttribute("categ",rescats);
+//			subCategories.(rescats :: add);
+			model.addAttribute("subcategories",subCategories);
 			return "/subcategory";
 		}
 	
