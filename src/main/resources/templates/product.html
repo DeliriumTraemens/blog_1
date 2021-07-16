@@ -1,10 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet"href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <link rel="stylesheet"href="https://getbootstrap.com/docs/5.0/scss/mixins/_utilities.scss"/>
+<!--  Вставка значения титула из модели-->
+  <title th:text = ${title} />
 </head>
+
 <body>
-$END$
+
+  <header th:insert="blocks/header :: header"></header>
+  <h1>Product list</h1>
+
+
+  <div class="container mt-5">
+
+        <div th:each="el:${products}" class="bg-light mt-3 mb-2">
+          <h3 th:text="${el.name}" />
+          <h5 th:text="${el.description}" />
+          <p th:text="${el.price}" />
+          <a th:href="'/product/' + ${el.id}" class="=btn btn-sm btn-danger">Детальнее</a>
+      <!--    <a th:href="'/blog/' + ${el.id}" class="btn btn-sm btn-outline-secondary">Детальнее</a>-->
+
+ </div>
+
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+
+        <div class="mb-4" th:each="el:${products}">
+          <!--карточка-->
+          <div class="col">
+            <div class="card shadow-sm">
+              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+
+              <div class="card-body">
+                <h4 class="lead text-muted" th:text="${el.name}" />
+                <p class="card-text" th:text="${el.description}"/>
+                <p class="card-text" th:text="${el.price}"/>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a th:href="'/blog/' + ${el.id}" class="btn btn-sm btn-outline-primary">View</a>
+                    <a th:href="'/blog/' + ${el.id} + '/edit'" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  </div>
+                  <small class="text-muted">9 mins</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<footer th:insert="blocks/footer :: footer"></footer>
+
+
+
+
 </body>
 </html>

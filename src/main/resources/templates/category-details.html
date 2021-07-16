@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title th:text = ${title} />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet"href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 </head>
 <body>
-$END$
+<header th:insert="blocks/header :: header"></header>
+
+<h1>Category Page</h1>
+
+<div class="container mt-5">
+    <div th:each="el:${categ}" class="alert-info mt-3">
+     <h3 th:text="${el.id}"/>
+     <h2 th:text="${el.name}" />
+    </div>
+</div>
+
+
+<div class="container mt-5 mb-5">
+<!--    th:action="'/category/' + ${el.id}-->
+<!--    <form action="/category/${el.id}" method="post">-->
+    <form  method="post">
+<!--    <form th:action="'/category/' + ${el.id}" method="post">-->
+        <input type="text" name="catName" placeholder="Введите название подкатегории" class="form-control"><br>
+        <input type="text" name="catDescription" placeholder="Введите описание подкатегории" class="form-control"><br>
+
+        <button type="submit" class="btn btn-success mb-3">Добавить Подкатегорию</button>
+
+    </form>
+
+</div>
+
+
+
+<footer th:insert="blocks/footer :: footer"></footer>
 </body>
 </html>

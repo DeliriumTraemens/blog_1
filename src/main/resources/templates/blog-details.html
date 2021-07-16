@@ -11,17 +11,21 @@
 
 <header th:insert="blocks/header :: header"></header>
 
-<h1>Блог Сайта</h1>
+<h1>Статья блога</h1>
 
 <div class="container mt-5">
 
     <div th:each="el:${post}" class="alert-info mt-3">
         <h3 th:text="${el.title}" />
         <p th:text="${el.full_text}" />
-        <p th:text="${el.full_text}" />
-        <p th:text="${el.views}" />
-        <a th:href="'/blog/' + ${el.id} +'/edit'" class="=btn btn-warning">Редактировать</a>
-        <a th:href="'/blog/' + ${el.id} + 'remove'" class="=btn btn-warning">Удалить</a>
+        <p> <b>Просмотры: </b>  <span th:text="${el.views}"/>  </p>
+
+                <a th:href="'/blog/' + ${el.id} +'/edit'" class="=btn btn-warning">Редактировать</a><br><br>
+
+        <form th:action="'/blog/' + ${el.id} +'/remove'" method="post">
+            <button class="btn btn-warning" type="submit">Удалить</button>
+        </form>
+<!--                <a th:href="'/blog/' + ${el.id} + 'remove'" class="=btn btn-warning">Удалить</a>-->
 
     </div>
 

@@ -1,7 +1,9 @@
 package com.nick.blog_1.controllers;
 
 import com.nick.blog_1.models.Post;
+import com.nick.blog_1.models.Product;
 import com.nick.blog_1.repo.PostRepository;
+import com.nick.blog_1.repo.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,13 +17,38 @@ import java.util.Optional;
 
 @Controller
 public class MainController {
-
+	
+	String slowo="Пример Блога";
+	
 	@GetMapping("/")
 	public String home (Model model) {
 	model.addAttribute("title", "Главная бля сука нахер страница");
+//	вставка кода из блога
+	Iterable<Post> posts = postRepository.findAll();
+	model.addAttribute("posts", posts);
+	model.addAttribute("inssertWord", slowo);
+	
+//	конец вставки
 	return "home";
 	}
-	
+
+@Autowired
+private ProductRepository  productRepository;
+	@GetMapping("/product")
+	public String product (Model model){
+		model.addAttribute("title", "Список Товаров");
+		Iterable<Product> products = productRepository.findAll();
+		model.addAttribute("products",products);
+		return "product";
+	}
+
+
+@GetMapping("/product/add")
+public String productAdd (Model model){
+model.addAttribute("title", "Добавить Товар");
+
+return "product-add";
+}
 	
 	@GetMapping("/about")
 	public String about (Model model) {
@@ -62,6 +89,19 @@ public class MainController {
 	//
 	//	return "redirect:/blog";
 	//}
+
+//@GetMapping("/blog/{id}/edit")
+//public String blogEdit(@PathVariable(value = "id") long id, Model model) {
+//if(!postRepository.existsById(id)){
+//	return "redirect:/blog";
+//}
+//
+//Optional<Post> post =postRepository.findById(id);
+//ArrayList<Post> res = new ArrayList<>();
+//post.ifPresent(res :: add);
+//model.addAttribute("post",res);
+//return "/blog-edit";
+//}
 	
 
 
