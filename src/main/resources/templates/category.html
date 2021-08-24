@@ -14,9 +14,8 @@
 <!--<h1>Категории</h1>-->
 <h1 th:text = ${title}></h1>
 <h2 th:text=${zagolovok}></h2>
-
+<!--Categories Block List-->
 <div class="container mt-5">
-
 
     <div th:each="el:${category}" class="bg-warning mt-3 " >
 
@@ -35,11 +34,51 @@
 
     </div>
 
-
-
 </div>
 
+<!-- Cards-->
+<div class="album py-5 bg-light">
+    <div class="container">
 
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+
+            <div class="mb-4" th:each="el:${category}">
+                <!--карточка-->
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+                             role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title>Placeholder</title>
+                            <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+
+
+                        <div class="card-body">
+                            <h4 class="lead text-muted" th:text="${el.name}" />
+                            <p class="card-text" th:text="${el.description}"/>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a th:href="'/category/' + ${el.id}" class="btn btn-primary">Детальнее</a>
+                                    <a th:href="'/subcategory/' + ${el.id}" class="=btn btn-sm btn-info">Субкатегории</a>
+<!--                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
+<!--                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
+                                </div>
+                                <small class="text-muted">9 mins</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Cards-->
+<div class="card">
+    <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+    <div class="card-body"> Some more card content </div>
+</div>
+<!--New card-->
 
 <footer th:insert="blocks/footer :: footer"></footer>
 
