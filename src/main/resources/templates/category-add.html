@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title th:text = ${title} />
+  <title th:text = "${title}" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet"href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 </head>
 <body>
 <header th:insert="blocks/header :: header"></header>
-<h1 th:text=${title}></h1>
+<h1 th:text="${title}"></h1>
 
 <div class="container mt-5 mb-5">
   <form action="/category/add" method="post">

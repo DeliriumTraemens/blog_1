@@ -1,0 +1,6 @@
+devtools:
+restart:
+enabled: true
+freemarker:
+debug: true
+cache: false

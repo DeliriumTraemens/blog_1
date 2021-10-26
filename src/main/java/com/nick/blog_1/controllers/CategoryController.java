@@ -5,6 +5,7 @@ import com.nick.blog_1.models.Post;
 import com.nick.blog_1.models.Product;
 import com.nick.blog_1.repo.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,8 @@ import java.util.Optional;
 @Controller
 public class CategoryController
 	{
+		@Value("${upload.path}")
+		private String uploadPath;
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
@@ -49,6 +52,9 @@ public class CategoryController
 	categoryRepository.save(category);
 	return "redirect:/category";
 	}
+	
+	
+	
 	//Пример тут?
 	@GetMapping("/category/{id}")
 	public String blogDetails(@PathVariable(value = "id") long id, Model model) {
