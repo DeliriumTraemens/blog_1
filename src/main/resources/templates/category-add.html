@@ -11,12 +11,37 @@
 <h1 th:text="${title}"></h1>
 
 <div class="container mt-5 mb-5">
-  <form action="/category/add" method="post">
-    <input type="text" name="catName" placeholder="Введите название Категории" class="form-control"><br>
-<!--    <input type="text" name="catParent" placeholder="Введите номер Родительской Категории" class="form-control"><br>-->
-    <input type="text" name="catDescription" placeholder="Введите Описание Категории" class="form-control"><br>
-    <button type="submit" class="btn btn-success">Добавить Категорию</button>
-  </form>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col">
+      <div class="container">
+        <form action="/category/add" method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+              <input type="text" name="catName" placeholder="Введите название Категории" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <input type="text" name="catParent" placeholder="Введите номер Родительской Категории" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <input type="text" name="catDescription" placeholder="Введите Описание Категории" class="form-control">
+          </div>
+          <div class="mb-3">
+            <div class="custom-file">
+              <input type="file" name="file">
+
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-success">Добавить Категорию</button>
+        </form>
+
+      </div>
+
+    </div>
+    <div class="col"></div>
+  </div>
 </div>
 
 <footer th:insert="blocks/footer :: footer"></footer>

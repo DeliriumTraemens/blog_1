@@ -10,6 +10,8 @@ public class WebMvcConfig implements WebMvcConfigurer  {
 	
 	@Value("${upload.path}")
 	private String uploadPath;
+	@Value("${upload.path2}")
+	private String uploadPath2;
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
