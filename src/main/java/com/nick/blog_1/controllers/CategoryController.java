@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -84,17 +85,17 @@ public class CategoryController {
 		Category categoryForEdit = categoryRepository.findById(Long.valueOf(id)).get();
 		
 		
-		if (catName != null) {
-			categoryForEdit.setName(catName);
-		}
-		if (categoryForEdit.getParentId() != Integer.valueOf(catParentId)) {
-			categoryForEdit.setParentId(Integer.valueOf(catParentId));
-		}
-		if (categoryForEdit.getDescription() != catDescription) {
-			categoryForEdit.setDescription(catDescription);
-		}
-		
-		categoryForEdit.setImagePath(file.getOriginalFilename());
+			if (catName != null) {
+				categoryForEdit.setName(catName);
+			}
+			if (categoryForEdit.getParentId() != Integer.valueOf(catParentId)) {
+				categoryForEdit.setParentId(Integer.valueOf(catParentId));
+			}
+			if (categoryForEdit.getDescription() != catDescription) {
+				categoryForEdit.setDescription(catDescription);
+			}
+			
+			categoryForEdit.setImagePath(file.getOriginalFilename());
 		
 		file.transferTo(new File(uploadPath + "/" + file.getOriginalFilename()));
 		
@@ -113,14 +114,37 @@ public class CategoryController {
 		if (! categoryRepository.existsById(id)) {
 			return "redirect:/category";
 		}
-
-//	Optional<Category> categ =categoryRepository.findById(id);
-		Optional<Category> categ = categoryRepository.findById(id);//STOPPED HERE
-		ArrayList<Category> rescats = new ArrayList<>();
-		categ.ifPresent(rescats::add);
-		model.addAttribute("categ", rescats);
+		
+		model.addAttribute("parentCategory", categoryRepository.findById(id).get());
 		return "/category-details";
 	}
+	
+	@PostMapping("/category/{id}")
+	public String subcategoryAdd(
+			@PathVariable(value = "id") long id,
+			@RequestParam String catName,
+			@RequestParam String catDescription,
+			@RequestParam("file") MultipartFile file,
+			Model model) throws IOException {
+		
+		if (file!=null && !file.getOriginalFilename().isEmpty()){
+			File pathMaker = new File(uploadPath);
+				if (!pathMaker.exists()) {
+					pathMaker.mkdir();
+				}
+		}
+		
+		Category subCat = new Category();
+			subCat.setParentId(id);
+			subCat.setName(catName);
+			subCat.setDescription(catDescription);
+			subCat.setImagePath(file.getOriginalFilename());
+		
+		file.transferTo(new File(uploadPath+"/"+file.getOriginalFilename()));
+		categoryRepository.save(subCat);
+		return "redirect:/category";
+	}
+	
 	
 	/////
 	
@@ -138,20 +162,5 @@ public class CategoryController {
 	
 	//////
 	
-	@PostMapping("/category/{id}")
-	public String subcategoryAdd(
-			@PathVariable(value = "id") long id,
-			@RequestParam String catName,
-			@RequestParam String catDescription,
-			Model model
-	                            ) {
-		Category category = categoryRepository.findById(id).orElseThrow();
-		Category subCat = new Category();
-		subCat.setParentId(id);
-		subCat.setName(catName);
-		subCat.setDescription(catDescription);
-		System.out.println("Созданная категория " + subCat.toString());
-		categoryRepository.save(subCat);
-		return "redirect:/category";
-	}
+	
 }

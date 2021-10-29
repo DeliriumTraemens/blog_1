@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title th:text = ${title} />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet"href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <title th:text=${title}/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 </head>
 <body>
 <header th:insert="blocks/header :: header"></header>
@@ -12,27 +12,33 @@
 <h1>Category Page</h1>
 
 <div class="container mt-5">
-    <div th:each="el:${categ}" class="alert-info mt-3">
-     <h3 th:text="${el.id}"/>
-     <h2 th:text="${el.name}" />
+    <h3>Первый контейнер</h3>
+    <div class="warning">
+        <h4 th:text="'Parent Id '+${parentCategory.id}"></h4>
+        <h4 th:text="'Parent Name '+${parentCategory.name}"></h4>
     </div>
+
+
 </div>
 
 
 <div class="container mt-5 mb-5">
-<!--    th:action="'/category/' + ${el.id}-->
-<!--    <form action="/category/${el.id}" method="post">-->
-    <form  method="post">
-<!--    <form th:action="'/category/' + ${el.id}" method="post">-->
-        <input type="text" name="catName" placeholder="Введите название подкатегории" class="form-control"><br>
-        <input type="text" name="catDescription" placeholder="Введите описание подкатегории" class="form-control"><br>
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <input type="text" name="catName" placeholder="Введите название подкатегории" class="form-control"><br>
+        </div>
+        <div class="mb-3">
+            <input type="text" name="catDescription" placeholder="Введите описание подкатегории" class="form-control"><br>
+        </div>
+        <div class="mb-3">
+            <input type="file" name="file">
+        </div>
 
         <button type="submit" class="btn btn-success mb-3">Добавить Подкатегорию</button>
 
     </form>
 
 </div>
-
 
 
 <footer th:insert="blocks/footer :: footer"></footer>
