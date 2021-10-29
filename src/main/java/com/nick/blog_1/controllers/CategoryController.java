@@ -34,9 +34,8 @@ public class CategoryController {
 	public String category(Model model) {
 		model.addAttribute("title", "Категории");
 		model.addAttribute("zagolovok", "Текст переданного заголовка");
-		Long idp = 0L;
-		Iterable<Category> categories = categoryRepository.findByParentId(idp);
-		model.addAttribute("categoryList", categories);
+//
+		model.addAttribute("categoryList",categoryRepository.findByParentId(0L));
 		return "category";
 	}
 	
@@ -107,11 +106,11 @@ public class CategoryController {
 //	Category Edit
 	
 	
-	//Пример тут?
+	//Добавление подкатегории
+	// TODO: 28.10.2021 Добавить картинки и упорядочить
 	@GetMapping("/category/{id}")
 	public String blogDetails(@PathVariable(value = "id") long id, Model model) {
 		if (! categoryRepository.existsById(id)) {
-			
 			return "redirect:/category";
 		}
 
@@ -128,15 +127,10 @@ public class CategoryController {
 	@GetMapping("/subcategory/{id}")
 	public String subCategoryList(@PathVariable(value = "id") long id, Model model) {
 		if (! categoryRepository.existsById(id)) {
-			
 			return "redirect:/category";
 		}
-
-//	Optional<Category> categ =categoryRepository.findById(id);
-		Iterable<Category> subCategories = categoryRepository.findByParentId(id);//STOPPED HERE
-		ArrayList<Category> rescats = new ArrayList<>();
-//			subCategories.(rescats :: add);
-		model.addAttribute("subcategories", subCategories);
+		model.addAttribute("subcategories", categoryRepository.findByParentId(id));
+		model.addAttribute("parentName",categoryRepository.findById(id).get().getName());
 		model.addAttribute("title","Подкатегории");
 		return "/subcategory";
 	}
