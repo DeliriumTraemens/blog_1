@@ -41,7 +41,7 @@ public class CategoryController {
 	}
 	
 	//TODO Вызов субкатегории
-	
+	//Add NEW Category
 	@GetMapping("/category/add")
 	public String categoryAdd(Model model) {
 		model.addAttribute("title", "Добавить Категорию");
@@ -49,8 +49,31 @@ public class CategoryController {
 	}
 	
 	@PostMapping("/category/add")
-	public String categoryAdd(@RequestParam String catName, @RequestParam String catDescription) {
-		Category category = new Category(catName, catDescription);
+	public String categoryAdd(@RequestParam String catName,
+	                          @RequestParam String catParent,
+	                          @RequestParam String catDescription,
+	                          @RequestParam ("file") MultipartFile file) throws IOException {
+		//catName catParent catDescription file
+		Category category = new Category();
+		if (catName!=null){
+			category.setName(catName);
+		}
+		if (catParent!=null){
+			category.setParentId(Long.valueOf(catParent));
+		}
+		if (catDescription!=null){
+			category.setDescription(catDescription);
+		}
+		
+		if (file!=null && !file.getOriginalFilename().isEmpty()){
+			File pathMaker = new File(uploadPath);
+			if (!pathMaker.exists()) {
+				pathMaker.mkdir();
+			}
+			category.setImagePath(file.getOriginalFilename());
+			file.transferTo(new File(uploadPath + "/" + file.getOriginalFilename()));
+		}
+		
 		categoryRepository.save(category);
 		return "redirect:/category";
 	}
@@ -66,8 +89,6 @@ public class CategoryController {
 		
 	}
 	
-
-	
 	@PostMapping("/catedit")
 	public String catEditTest(@RequestParam String catName,
 	                          @RequestParam String id,
@@ -75,15 +96,16 @@ public class CategoryController {
 	                          @RequestParam String catDescription,
 	                          @RequestParam("file") MultipartFile file) throws IOException {
 		
+		Category categoryForEdit = categoryRepository.findById(Long.valueOf(id)).get();
+		
 		if (file != null && !file.getOriginalFilename().isEmpty()) {
 			File directoryMaker = new File(uploadPath);
 			if (! directoryMaker.exists()) {
 				directoryMaker.mkdir();
 			}
+			categoryForEdit.setImagePath(file.getOriginalFilename());
+			file.transferTo(new File(uploadPath + "/" + file.getOriginalFilename()));
 		}
-		
-		Category categoryForEdit = categoryRepository.findById(Long.valueOf(id)).get();
-		
 		
 			if (catName != null) {
 				categoryForEdit.setName(catName);
@@ -95,9 +117,6 @@ public class CategoryController {
 				categoryForEdit.setDescription(catDescription);
 			}
 			
-			categoryForEdit.setImagePath(file.getOriginalFilename());
-		
-		file.transferTo(new File(uploadPath + "/" + file.getOriginalFilename()));
 		
 		categoryRepository.save(categoryForEdit);
 		
@@ -108,7 +127,6 @@ public class CategoryController {
 	
 	
 	//Добавление подкатегории
-	// TODO: 28.10.2021 Добавить картинки и упорядочить
 	@GetMapping("/category/{id}")
 	public String blogDetails(@PathVariable(value = "id") long id, Model model) {
 		if (! categoryRepository.existsById(id)) {
@@ -119,6 +137,14 @@ public class CategoryController {
 		return "/category-details";
 	}
 	
+	//Delete Category
+	@GetMapping("/categoryRemove/{id}")
+	public String categoryRemover(@PathVariable(value = "id") long id){
+		categoryRepository.deleteById(id);
+		return "redirect:/category";
+	}
+	
+	// TODO: 29.10.2021 сделать составной путь к картинкам
 	@PostMapping("/category/{id}")
 	public String subcategoryAdd(
 			@PathVariable(value = "id") long id,
@@ -127,20 +153,23 @@ public class CategoryController {
 			@RequestParam("file") MultipartFile file,
 			Model model) throws IOException {
 		
+		Category subCat = new Category();
+			subCat.setParentId(id);
+			subCat.setName(catName);
+			subCat.setDescription(catDescription);
+		
+		
 		if (file!=null && !file.getOriginalFilename().isEmpty()){
 			File pathMaker = new File(uploadPath);
 				if (!pathMaker.exists()) {
 					pathMaker.mkdir();
 				}
+			subCat.setImagePath(file.getOriginalFilename());
+			file.transferTo(new File(uploadPath+"/"+file.getOriginalFilename()));
+			
 		}
 		
-		Category subCat = new Category();
-			subCat.setParentId(id);
-			subCat.setName(catName);
-			subCat.setDescription(catDescription);
-			subCat.setImagePath(file.getOriginalFilename());
 		
-		file.transferTo(new File(uploadPath+"/"+file.getOriginalFilename()));
 		categoryRepository.save(subCat);
 		return "redirect:/category";
 	}

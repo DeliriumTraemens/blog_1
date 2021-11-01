@@ -13,6 +13,18 @@ public class Product
 		
 		@Column
 		private Long categoryId;
+		
+		@Column
+		private String name;
+		
+		@Column
+		private String description;
+		
+		@Column
+		private float price;
+		
+		@Column
+		private String imagePath;
 	
 	@Override
 	public boolean equals(Object o)
@@ -34,6 +46,8 @@ public class Product
 		{
 		return Objects.hash(id, categoryId, name, description, price, imagePath);
 		}
+		
+		
 	
 	public Long getCategoryId()
 		{
@@ -55,17 +69,7 @@ public class Product
 		this.imagePath = imagePath;
 		}
 	
-	@Column
-		private String name;
 		
-		@Column
-		private String description;
-		
-		@Column
-		private float price;
-		
-		@Column
-		private String imagePath;
 	
 	public Product()
 		{
@@ -147,7 +151,7 @@ public class Product
 	@Override
 	public String toString()
 		{
-		return "Product{" +
+		return "\nProduct{" +
 				       "id=" + id +
 				       ", name='" + name + '\'' +
 				       ", description='" + description + '\'' +

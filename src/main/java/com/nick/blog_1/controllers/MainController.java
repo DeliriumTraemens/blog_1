@@ -32,16 +32,6 @@ public class MainController {
 	return "home";
 	}
 
-@Autowired
-private ProductRepository  productRepository;
-	@GetMapping("/product")
-	public String product (Model model){
-		model.addAttribute("title", "Список Товаров");
-		Iterable<Product> products = productRepository.findAll();
-		model.addAttribute("products",products);
-		return "product";
-	}
-
 
 @GetMapping("/product/add")
 public String productAdd (Model model){

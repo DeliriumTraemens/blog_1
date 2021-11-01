@@ -18,14 +18,6 @@ public class BlogController
 	{
 		@Autowired
 		private PostRepository postRepository;
-//
-//		@GetMapping("/blog")
-//		public String blogMain(Model model)
-//			{
-//			Iterable<Post> posts = postRepository.findAll();
-//			model.addAttribute("posts", posts);
-//			return "blog-main";
-//			}
 	
 	@PostMapping("/blog/add")
 	public String blogPostAdd(@RequestParam String title, @RequestParam String anons, @RequestParam String full_text, Model model){

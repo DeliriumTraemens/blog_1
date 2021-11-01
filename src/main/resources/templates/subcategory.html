@@ -26,7 +26,7 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
         <div class="card-group  mt-3 " th:each="el:${subcategories}">
-            <div class="card shadow p-3 mb-5 mr-3 rounded" style="background-color: bisque">
+            <div class="card shadow-sm p-3 mb-5 mr-3 rounded" style="background-color: bisque">
 
                 <img th:src="@{'../picsUp/'+${el.getImagePath()}}" alt="" width="100" height="200" class="card-img-top">
 
@@ -41,6 +41,8 @@
                         <a th:href="'/subcategory/' + ${el.id}"     class="=btn btn-sm btn-warning mb-2">Субкатегории</a>
                         <a th:href="'/category/' + ${el.id}"        class="=btn btn-sm btn-info mb-2" >Добавить подкатегорию</a>
                         <a th:href="'/categoryEdit/' + ${el.id}"    class="=btn btn-sm btn-primary mb-2">Редактировать</a>
+                        <hr>
+                        <a th:href="'/categoryRemove/' + ${el.id}" class="btn btn-sm btn-danger mb-2">Удалить</a>
 
                     </div>
                 </div>
