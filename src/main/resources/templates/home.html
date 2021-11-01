@@ -32,43 +32,41 @@
                 </div>
             </section>
 
-            <div class="album py-5 bg-light">
+            <div class="album py-3 bg-light">
                 <div class="container">
 
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
 
-                    <div class="mb-4" th:each="el:${posts}">
-                        <!--карточка-->
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <!--<svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                     xmlns="http://www.w3.org/2000/svg"
-                                     role="img" aria-label="Placeholder: Thumbnail"
-                                     preserveAspectRatio="xMidYMid slice" focusable="false">
-                                    <title>Placeholder</title>
-                                    <rect width="100%" height="100%" fill="#55595c">
+                            <div class="card-group m-1" th:each="el:${posts}">
+                                <!--карточка-->
+                                    <div class="card shadow-sm">
+                                        <!--<svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                             xmlns="http://www.w3.org/2000/svg"
+                                             role="img" aria-label="Placeholder: Thumbnail"
+                                             preserveAspectRatio="xMidYMid slice" focusable="false">
+                                            <title>Placeholder</title>
+                                            <rect width="100%" height="100%" fill="#55595c">
 
-                                    </rect>
-                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail бля</text>
-                                </svg>-->
-                                    <img  th:src="@{../images/cat1.jpg}" />
+                                            </rect>
+                                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail бля</text>
+                                        </svg>-->
+                                            <img  th:src="@{../images/cat1.jpg}" />
 
-                                <div class="card-body" >
-                                    <h4 class="lead text-muted" th:text="${el.title}" />
-                                    <p class="card-text" th:text="${el.anons}"/>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a th:href="'/blog/' + ${el.id}" class="btn btn-sm btn-outline-primary">View</a>
-                                            <a th:href="'/blog/' + ${el.id} + '/edit'" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                            <!--<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
-                                        </div>
+                                        <div class="card-body" >
+                                            <h4 class="lead text-muted" th:text="${el.title}" />
+                                            <p class="card-text" th:text="${el.anons}"/>
+                                        </div><!--card body-->
+                                            <div class="d-flex justify-content-between align-items-center">aa
+                                            </div><!--d flex-->
+                                                <div class="card-footer m-1">
+                                                    <div class="btn-group ">
+                                                        <a th:href="'/blog/' + ${el.id}" class="btn btn-sm btn-outline-primary">View</a>
+                                                        <a th:href="'/blog/' + ${el.id} + '/edit'" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                                    </div>
+                                                </div>
 
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            </div><!--card group-->
 
                     </div>
                 </div>
