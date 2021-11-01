@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -30,6 +32,33 @@ public class CategoryController {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	//------- SERVICE ------------\\//
+	
+	//<Category> Crumbs maker
+	public List<Category> setUpPath(long id){
+			LinkedList<Category> crumbList = new LinkedList();
+			Category currentCat = categoryRepository.findById(id).get();
+			
+			crumbList.addFirst(currentCat);
+			
+			while(currentCat.getParentId()!=0L){
+				currentCat=categoryRepository.findById(currentCat.getParentId()).get();
+				crumbList.addFirst(currentCat);
+			}
+		
+		return crumbList;
+	}
+	//String imagePath maker
+	public String imagePathMaker(List<Category> crumbs) {
+		String imagePath="/";
+		for (Category category : crumbs){
+			imagePath += category.getName()+"/";
+		}
+		return imagePath;
+	}
+	
+	
+	//------- SERVICE ------------//\\
 	
 	@GetMapping("/category")
 	public String category(Model model) {
@@ -65,13 +94,20 @@ public class CategoryController {
 			category.setDescription(catDescription);
 		}
 		
+		String currentImagePath = uploadPath+"/"+catName;
+		String currentCategoryImagePath = catName;
+		
+		
 		if (file!=null && !file.getOriginalFilename().isEmpty()){
-			File pathMaker = new File(uploadPath);
+			File pathMaker = new File(currentImagePath);
 			if (!pathMaker.exists()) {
 				pathMaker.mkdir();
 			}
-			category.setImagePath(file.getOriginalFilename());
-			file.transferTo(new File(uploadPath + "/" + file.getOriginalFilename()));
+			
+			
+//			category.setImagePath(file.getOriginalFilename());
+			category.setImagePath(currentCategoryImagePath+"/"+ file.getOriginalFilename());
+			file.transferTo(new File(currentImagePath + "/"+file.getOriginalFilename()));
 		}
 		
 		categoryRepository.save(category);
@@ -157,7 +193,7 @@ public class CategoryController {
 			subCat.setParentId(id);
 			subCat.setName(catName);
 			subCat.setDescription(catDescription);
-		
+		// TODO: 01.11.2021 обработчик пути сделать
 		
 		if (file!=null && !file.getOriginalFilename().isEmpty()){
 			File pathMaker = new File(uploadPath);
