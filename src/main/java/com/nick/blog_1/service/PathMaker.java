@@ -4,7 +4,9 @@ import com.nick.blog_1.models.Category;
 import com.nick.blog_1.repo.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,6 +40,13 @@ public class PathMaker {
 		return imagePath;
 	}
 	
+	//Mkdir
+	public void directoryMaker(String directoryPath){
+		File pathMaker = new File(directoryPath);
+		if(!pathMaker.exists()){
+			pathMaker.mkdir();
+		}
+	}
 	
 	//------- SERVICE ------------//\\
 }

@@ -124,6 +124,7 @@ public class CategoryController {
 			if (! directoryMaker.exists()) {
 				directoryMaker.mkdir();
 			}
+			
 			categoryForEdit.setImagePath(imagePathForPicture+"/"+ file.getOriginalFilename());
 			file.transferTo(new File(uploadPath+"/"+imagePathForPicture+"/"+file.getOriginalFilename()));
 		}
@@ -147,6 +148,14 @@ public class CategoryController {
 //	Category Edit
 	
 	
+	
+	//Delete Category
+	@GetMapping("/categoryRemove/{id}")
+	public String categoryRemover(@PathVariable(value = "id") long id){
+		categoryRepository.deleteById(id);
+		return "redirect:/category";
+	}
+	
 	//Добавление подкатегории
 	@GetMapping("/category/{id}")
 	public String blogDetails(@PathVariable(value = "id") long id, Model model) {
@@ -158,14 +167,7 @@ public class CategoryController {
 		return "/category-details";
 	}
 	
-	//Delete Category
-	@GetMapping("/categoryRemove/{id}")
-	public String categoryRemover(@PathVariable(value = "id") long id){
-		categoryRepository.deleteById(id);
-		return "redirect:/category";
-	}
-	
-	// TODO: 29.10.2021 сделать составной путь к картинкам
+	// Добавление СУБКАТЕГОРИИ ПОСТ
 	@PostMapping("/category/{id}")
 	public String subcategoryAdd(
 			@PathVariable(value = "id") long id,
@@ -180,7 +182,6 @@ public class CategoryController {
 			subCat.setDescription(catDescription);
 			
 		// ----Path Maker
-		
 		String imagePathForPicture = pm.imagePathMaker(pm.crumbsMaker(id),catName);
 		String directoryPathMkDir = uploadPath+imagePathForPicture;
 		{
@@ -189,19 +190,17 @@ public class CategoryController {
 			System.out.println("directoryPathMkDir " + directoryPathMkDir);
 			System.out.println("\n-----------------------------------\n");
 		}
-		
 		// ----Path Maker
-		
-		
 		if (file!=null && !file.getOriginalFilename().isEmpty()){
-			File pathMaker = new File(directoryPathMkDir);
-				if (!pathMaker.exists()) {
-					pathMaker.mkdir();
-				}
+			
+			pm.directoryMaker(directoryPathMkDir);
+			
 			subCat.setImagePath(imagePathForPicture+"/"+ file.getOriginalFilename());
-			System.out.println("\n---------------------------\n");
-			System.out.println(subCat.getImagePath());
-			System.out.println("\n---------------------------\n");
+			{
+				System.out.println("\n---------------------------\n");
+				System.out.println(subCat.getImagePath());
+				System.out.println("\n---------------------------\n");
+			}
 			
 			file.transferTo(new File(uploadPath+"/"+imagePathForPicture+"/"+file.getOriginalFilename()));
 			
