@@ -4,6 +4,7 @@ import com.nick.blog_1.models.Category;
 import com.nick.blog_1.models.Post;
 import com.nick.blog_1.models.Product;
 import com.nick.blog_1.repo.CategoryRepository;
+import com.nick.blog_1.service.PathMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -32,34 +33,11 @@ public class CategoryController {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
-	//------- SERVICE ------------\\//
 	
-	//<Category> Crumbs maker
-	public List<Category> crumbsMaker(long id){
-			LinkedList<Category> crumbList = new LinkedList();
-			Category currentCat = categoryRepository.findById(id).get();
-			
-			crumbList.addFirst(currentCat);
-			
-			while(currentCat.getParentId()!=0L){
-				currentCat=categoryRepository.findById(currentCat.getParentId()).get();
-				crumbList.addFirst(currentCat);
-			}
-		
-		return crumbList;
-	}
-	//String imagePath maker
-	public String imagePathMaker(List<Category> crumbs,String name) {
-		String imagePath="/";
-		for (Category category : crumbs){
-			imagePath += category.getName()+"/";
-		}
-		imagePath+=name;
-		return imagePath;
-	}
+	@Autowired
+	private PathMaker pm;
 	
 	
-	//------- SERVICE ------------//\\
 	
 	@GetMapping("/category")
 	public String category(Model model) {
@@ -137,14 +115,17 @@ public class CategoryController {
 	                          @RequestParam("file") MultipartFile file) throws IOException {
 		
 		Category categoryForEdit = categoryRepository.findById(Long.valueOf(id)).get();
-		
+//		Path maker
+		String imagePathForPicture = pm.imagePathMaker(pm.crumbsMaker(Long.valueOf(id)),catName);
+		String directoryPathMkDir = uploadPath+imagePathForPicture;
+//		Path maker
 		if (file != null && !file.getOriginalFilename().isEmpty()) {
-			File directoryMaker = new File(uploadPath);
+			File directoryMaker = new File(directoryPathMkDir);
 			if (! directoryMaker.exists()) {
 				directoryMaker.mkdir();
 			}
-			categoryForEdit.setImagePath(file.getOriginalFilename());
-			file.transferTo(new File(uploadPath + "/" + file.getOriginalFilename()));
+			categoryForEdit.setImagePath(imagePathForPicture+"/"+ file.getOriginalFilename());
+			file.transferTo(new File(uploadPath+"/"+imagePathForPicture+"/"+file.getOriginalFilename()));
 		}
 		
 			if (catName != null) {
@@ -199,20 +180,29 @@ public class CategoryController {
 			subCat.setDescription(catDescription);
 			
 		// ----Path Maker
-//		String imagePathForPicture = catName;
 		
-		String imagePathForPicture = imagePathMaker(crumbsMaker(id),catName);
+		String imagePathForPicture = pm.imagePathMaker(pm.crumbsMaker(id),catName);
 		String directoryPathMkDir = uploadPath+imagePathForPicture;
+		{
+			System.out.println("\n-----------------------------------\n");
+			System.out.println("imagePathForPicture " + imagePathForPicture);
+			System.out.println("directoryPathMkDir " + directoryPathMkDir);
+			System.out.println("\n-----------------------------------\n");
+		}
+		
 		// ----Path Maker
 		
 		
 		if (file!=null && !file.getOriginalFilename().isEmpty()){
-//			File pathMaker = new File(uploadPath);
 			File pathMaker = new File(directoryPathMkDir);
 				if (!pathMaker.exists()) {
 					pathMaker.mkdir();
 				}
-			subCat.setImagePath(file.getOriginalFilename());
+			subCat.setImagePath(imagePathForPicture+"/"+ file.getOriginalFilename());
+			System.out.println("\n---------------------------\n");
+			System.out.println(subCat.getImagePath());
+			System.out.println("\n---------------------------\n");
+			
 			file.transferTo(new File(uploadPath+"/"+imagePathForPicture+"/"+file.getOriginalFilename()));
 			
 		}
