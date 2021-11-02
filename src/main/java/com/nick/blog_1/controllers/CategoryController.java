@@ -35,7 +35,7 @@ public class CategoryController {
 	//------- SERVICE ------------\\//
 	
 	//<Category> Crumbs maker
-	public List<Category> setUpPath(long id){
+	public List<Category> crumbsMaker(long id){
 			LinkedList<Category> crumbList = new LinkedList();
 			Category currentCat = categoryRepository.findById(id).get();
 			
@@ -49,11 +49,12 @@ public class CategoryController {
 		return crumbList;
 	}
 	//String imagePath maker
-	public String imagePathMaker(List<Category> crumbs) {
+	public String imagePathMaker(List<Category> crumbs,String name) {
 		String imagePath="/";
 		for (Category category : crumbs){
 			imagePath += category.getName()+"/";
 		}
+		imagePath+=name;
 		return imagePath;
 	}
 	
@@ -198,18 +199,21 @@ public class CategoryController {
 			subCat.setDescription(catDescription);
 			
 		// ----Path Maker
-		String directoryPathMkDir = uploadPath+"/"+catName;
-		String imagePathForPicture = catName;
+//		String imagePathForPicture = catName;
+		
+		String imagePathForPicture = imagePathMaker(crumbsMaker(id),catName);
+		String directoryPathMkDir = uploadPath+imagePathForPicture;
 		// ----Path Maker
 		
 		
 		if (file!=null && !file.getOriginalFilename().isEmpty()){
-			File pathMaker = new File(uploadPath);
+//			File pathMaker = new File(uploadPath);
+			File pathMaker = new File(directoryPathMkDir);
 				if (!pathMaker.exists()) {
 					pathMaker.mkdir();
 				}
 			subCat.setImagePath(file.getOriginalFilename());
-			file.transferTo(new File(uploadPath+"/"+file.getOriginalFilename()));
+			file.transferTo(new File(uploadPath+"/"+imagePathForPicture+"/"+file.getOriginalFilename()));
 			
 		}
 		
