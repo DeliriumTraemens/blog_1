@@ -94,20 +94,20 @@ public class CategoryController {
 			category.setDescription(catDescription);
 		}
 		
-		String currentImagePath = uploadPath+"/"+catName;
-		String currentCategoryImagePath = catName;
+		String directoryPathMkDir = uploadPath+"/"+catName;
+		String imagePathForPicture = catName;
 		
 		
 		if (file!=null && !file.getOriginalFilename().isEmpty()){
-			File pathMaker = new File(currentImagePath);
+			File pathMaker = new File(directoryPathMkDir);
 			if (!pathMaker.exists()) {
 				pathMaker.mkdir();
 			}
 			
 			
 //			category.setImagePath(file.getOriginalFilename());
-			category.setImagePath(currentCategoryImagePath+"/"+ file.getOriginalFilename());
-			file.transferTo(new File(currentImagePath + "/"+file.getOriginalFilename()));
+			category.setImagePath(imagePathForPicture+"/"+ file.getOriginalFilename());
+			file.transferTo(new File(directoryPathMkDir + "/"+file.getOriginalFilename()));
 		}
 		
 		categoryRepository.save(category);
