@@ -93,9 +93,12 @@ public class CategoryController {
 		if (catDescription!=null){
 			category.setDescription(catDescription);
 		}
+		// ----Path Maker
 		
 		String directoryPathMkDir = uploadPath+"/"+catName;
 		String imagePathForPicture = catName;
+		
+		// ----Path Maker
 		
 		
 		if (file!=null && !file.getOriginalFilename().isEmpty()){
@@ -193,7 +196,12 @@ public class CategoryController {
 			subCat.setParentId(id);
 			subCat.setName(catName);
 			subCat.setDescription(catDescription);
-		// TODO: 01.11.2021 обработчик пути сделать
+			
+		// ----Path Maker
+		String directoryPathMkDir = uploadPath+"/"+catName;
+		String imagePathForPicture = catName;
+		// ----Path Maker
+		
 		
 		if (file!=null && !file.getOriginalFilename().isEmpty()){
 			File pathMaker = new File(uploadPath);
