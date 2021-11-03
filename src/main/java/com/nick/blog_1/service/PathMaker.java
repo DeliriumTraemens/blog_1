@@ -30,13 +30,26 @@ public class PathMaker {
 		
 		return crumbList;
 	}
+	
 	//String imagePath maker
 	public String imagePathMaker(List<Category> crumbs,String name) {
+//	public String imagePathMaker(List<Category> crumbs) {
 		String imagePath="/";
 		for (Category category : crumbs){
 			imagePath += category.getName()+"/";
 		}
-		imagePath+=name;
+//		imagePath+=name;
+		return imagePath;
+	}
+	
+	////Path maker 2 non top level
+//	public String imagePathMaker2(List<Category> crumbs,String name) {
+	public String imagePathMaker2(List<Category> crumbs) {
+		String imagePath="/";
+		for (Category category : crumbs){
+			imagePath += category.getName()+"/";
+		}
+//		imagePath+=name;
 		return imagePath;
 	}
 	

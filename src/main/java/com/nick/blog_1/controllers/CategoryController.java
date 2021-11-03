@@ -49,7 +49,7 @@ public class CategoryController {
 	}
 	
 	//TODO Вызов субкатегории
-	//Add NEW Category
+	//Add NEW Category TOP LEVEL PARENT 0
 	@GetMapping("/category/add")
 	public String categoryAdd(Model model) {
 		model.addAttribute("title", "Добавить Категорию");
@@ -63,14 +63,16 @@ public class CategoryController {
 	                          @RequestParam ("file") MultipartFile file) throws IOException {
 		//catName catParent catDescription file
 		Category category = new Category();
-		if (catName!=null){
-			category.setName(catName);
-		}
-		if (catParent!=null){
-			category.setParentId(Long.valueOf(catParent));
-		}
-		if (catDescription!=null){
-			category.setDescription(catDescription);
+		{
+			if (catName != null) {
+				category.setName(catName);
+			}
+			if (catParent != null) {
+				category.setParentId(Long.valueOf(catParent));
+			}
+			if (catDescription != null) {
+				category.setDescription(catDescription);
+			}
 		}
 		// ----Path Maker
 		
@@ -81,10 +83,8 @@ public class CategoryController {
 		
 		
 		if (file!=null && !file.getOriginalFilename().isEmpty()){
-			File pathMaker = new File(directoryPathMkDir);
-			if (!pathMaker.exists()) {
-				pathMaker.mkdir();
-			}
+			pm.directoryMaker(directoryPathMkDir);
+			
 			
 			
 //			category.setImagePath(file.getOriginalFilename());
@@ -116,7 +116,8 @@ public class CategoryController {
 		
 		Category categoryForEdit = categoryRepository.findById(Long.valueOf(id)).get();
 //		Path maker
-		String imagePathForPicture = pm.imagePathMaker(pm.crumbsMaker(Long.valueOf(id)),catName);
+//		String imagePathForPicture = pm.imagePathMaker(pm.crumbsMaker(Long.valueOf(id)),catName);
+		String imagePathForPicture = pm.imagePathMaker2(pm.crumbsMaker(Long.valueOf(id)));
 		String directoryPathMkDir = uploadPath+imagePathForPicture;
 //		Path maker
 		if (file != null && !file.getOriginalFilename().isEmpty()) {
