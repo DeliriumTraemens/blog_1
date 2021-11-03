@@ -120,10 +120,8 @@ public class CategoryController {
 		String directoryPathMkDir = uploadPath+imagePathForPicture;
 //		Path maker
 		if (file != null && !file.getOriginalFilename().isEmpty()) {
-			File directoryMaker = new File(directoryPathMkDir);
-			if (! directoryMaker.exists()) {
-				directoryMaker.mkdir();
-			}
+			
+			pm.directoryMaker(directoryPathMkDir);
 			
 			categoryForEdit.setImagePath(imagePathForPicture+"/"+ file.getOriginalFilename());
 			file.transferTo(new File(uploadPath+"/"+imagePathForPicture+"/"+file.getOriginalFilename()));
