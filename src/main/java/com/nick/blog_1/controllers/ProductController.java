@@ -4,6 +4,7 @@ import com.nick.blog_1.models.Post;
 import com.nick.blog_1.models.Product;
 import com.nick.blog_1.repo.CategoryRepository;
 import com.nick.blog_1.repo.ProductRepository;
+import com.nick.blog_1.service.PathMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,8 @@ public class ProductController {
 	private ProductRepository productRepository;
 	@Autowired
 	private CategoryRepository catRepo;
+	@Autowired
+	private PathMaker pm;
 	
 	
 	@GetMapping("/product")
@@ -44,6 +47,7 @@ public class ProductController {
 	
 	@GetMapping("/productEdit/{id}")
 	public String productEdit(@PathVariable(value = "id") long id, Model model) {
+		
 		model.addAttribute("curProd", productRepository.findById(id).get());
 		return "product-edit";
 	}
@@ -60,13 +64,47 @@ public class ProductController {
 			/*id categoryId name description price file */
 		Product productToEdit = productRepository.findById(Long.valueOf(id)).get();
 		
+		// ----Path Maker
+		String catName=catRepo.findById(Long.valueOf(categoryId)).get().getName();
+//		String imagePathForPicture = pm.imagePathMakerAdd(pm.crumbsMaker(Long.valueOf(categoryId)), catName);
+		String imagePathForPicture = pm.imagePathMakerForEditor(pm.crumbsMaker(Long.valueOf(categoryId)));
+		String directoryPathMkDir = uploadPath+imagePathForPicture;
+		String transferPath=pm.resultPathForTransfer(uploadPath,imagePathForPicture,file.getOriginalFilename());
+		{
+			System.out.println("\n--------------PPPPPPPPPP---------------------\n");
+			System.out.println("imagePathForPicture " + imagePathForPicture);
+			System.out.println("directoryPathMkDir " + directoryPathMkDir);
+			System.out.println("transferPath " + transferPath);
+			System.out.println("upload.path " + uploadPath);
+			System.out.println("\n---------------dddddddddd--------------------\n");
+		}
+		{
+//			--------------PPPPPPPPPP---------------------
+//
+//	imagePathForPicture /Тушка/Кумпол/
+//	directoryPathMkDir /D:/docs/pics/blog/Тушка/Кумпол/
+//	transferPath /D:/docs/pics/blog//Тушка/Кумпол/morda.jpg
+//	upload.path /D:/docs/pics/blog
+//
+//					                          ---------------dddddddddd--------------------
+		}
+		
+		// ----Path Maker
+		
 		if (file != null && !file.getOriginalFilename().isEmpty()) {
-			File pathMaker = new File(uploadPath);
-			if (!pathMaker.exists()) {
-				pathMaker.mkdir();
-			}
-			file.transferTo(new File(uploadPath + "/" + file.getOriginalFilename()));
-			productToEdit.setImagePath(file.getOriginalFilename());
+			pm.directoryMaker(directoryPathMkDir);
+			
+//			File pathMaker = new File(uploadPath);
+//			if (!pathMaker.exists()) {
+//				pathMaker.mkdir();
+//			}
+//			productToEdit.setImagePath(file.getOriginalFilename());
+//			productToEdit.setImagePath(imagePathForPicture+"/"+ file.getOriginalFilename());
+			productToEdit.setImagePath(imagePathForPicture+file.getOriginalFilename());
+//			file.transferTo(new File(uploadPath + "/" + file.getOriginalFilename()));
+//			file.transferTo(new File(uploadPath+"/"+imagePathForPicture+"/"+file.getOriginalFilename()));
+			file.transferTo(new File(transferPath));
+			
 		}
 		
 			if(categoryId !=null){

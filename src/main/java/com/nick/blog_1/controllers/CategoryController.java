@@ -1,8 +1,6 @@
 package com.nick.blog_1.controllers;
 
 import com.nick.blog_1.models.Category;
-import com.nick.blog_1.models.Post;
-import com.nick.blog_1.models.Product;
 import com.nick.blog_1.repo.CategoryRepository;
 import com.nick.blog_1.service.PathMaker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class CategoryController {
@@ -116,8 +109,7 @@ public class CategoryController {
 		
 		Category categoryForEdit = categoryRepository.findById(Long.valueOf(id)).get();
 //		Path maker
-//		String imagePathForPicture = pm.imagePathMaker(pm.crumbsMaker(Long.valueOf(id)),catName);
-		String imagePathForPicture = pm.imagePathMaker2(pm.crumbsMaker(Long.valueOf(id)));
+		String imagePathForPicture = pm.imagePathMakerForEditor(pm.crumbsMaker(Long.valueOf(id)));
 		String directoryPathMkDir = uploadPath+imagePathForPicture;
 //		Path maker
 		if (file != null && !file.getOriginalFilename().isEmpty()) {
@@ -181,7 +173,7 @@ public class CategoryController {
 			subCat.setDescription(catDescription);
 			
 		// ----Path Maker
-		String imagePathForPicture = pm.imagePathMaker(pm.crumbsMaker(id),catName);
+		String imagePathForPicture = pm.imagePathMakerAdd(pm.crumbsMaker(id), catName);
 		String directoryPathMkDir = uploadPath+imagePathForPicture;
 		{
 			System.out.println("\n-----------------------------------\n");
@@ -189,6 +181,7 @@ public class CategoryController {
 			System.out.println("directoryPathMkDir " + directoryPathMkDir);
 			System.out.println("\n-----------------------------------\n");
 		}
+		
 		// ----Path Maker
 		if (file!=null && !file.getOriginalFilename().isEmpty()){
 			

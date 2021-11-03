@@ -32,24 +32,22 @@ public class PathMaker {
 	}
 	
 	//String imagePath maker
-	public String imagePathMaker(List<Category> crumbs,String name) {
+	public String imagePathMakerAdd(List<Category> crumbs, String name) {
 //	public String imagePathMaker(List<Category> crumbs) {
 		String imagePath="/";
 		for (Category category : crumbs){
 			imagePath += category.getName()+"/";
 		}
-//		imagePath+=name;
+		imagePath+=name;
 		return imagePath;
 	}
 	
 	////Path maker 2 non top level
-//	public String imagePathMaker2(List<Category> crumbs,String name) {
-	public String imagePathMaker2(List<Category> crumbs) {
+	public String imagePathMakerForEditor(List<Category> crumbs) {
 		String imagePath="/";
 		for (Category category : crumbs){
 			imagePath += category.getName()+"/";
 		}
-//		imagePath+=name;
 		return imagePath;
 	}
 	
@@ -60,6 +58,18 @@ public class PathMaker {
 			pathMaker.mkdir();
 		}
 	}
+	
+	public String resultPathForTransfer(String uploadRoot, String dirPath, String pictureName ){
+//		return uploadRoot +"/"+ dirPath +"/"+ pictureName;
+//		return uploadRoot +"/"+ dirPath + pictureName;
+		return uploadRoot + dirPath + pictureName;
+//			file.transferTo(new File(uploadPath+"/"+imagePathForPicture+"/"+file.getOriginalFilename()));
+	}
+	
+//	imagePathForPicture /Тушка/Кумпол/
+//	directoryPathMkDir /D:/docs/pics/blog/Тушка/Кумпол/
+//	transferPath /D:/docs/pics/blog//Тушка/Кумпол/morda.jpg
+//	upload.path /D:/docs/pics/blog
 	
 	//------- SERVICE ------------//\\
 }
