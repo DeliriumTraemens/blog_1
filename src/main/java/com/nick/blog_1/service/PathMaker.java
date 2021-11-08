@@ -60,10 +60,7 @@ public class PathMaker {
 	}
 	
 	public String resultPathForTransfer(String uploadRoot, String dirPath, String pictureName ){
-//		return uploadRoot +"/"+ dirPath +"/"+ pictureName;
-//		return uploadRoot +"/"+ dirPath + pictureName;
 		return uploadRoot + dirPath + pictureName;
-//			file.transferTo(new File(uploadPath+"/"+imagePathForPicture+"/"+file.getOriginalFilename()));
 	}
 	
 //	imagePathForPicture /Тушка/Кумпол/

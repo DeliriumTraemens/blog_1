@@ -15,20 +15,28 @@
 
 <div class="container mt-5">
 
-    <div th:each="el:${product}" class="alert-info mt-3">
+    <div th:each="el:${product}" class="card alert-info mt-3">
         <h3 th:text="${el.name}" />
         <p th:text="${el.description}" />
-<!--        <p> <b>Просмотры: </b>  <span th:text="${el.views}"/>  </p>-->
-<!--        <a th:href="'/blog/' + ${el.id} +'/edit'" class="=btn btn-warning">Редактировать</a><br><br>-->
-<!--        <form th:action="'/blog/' + ${el.id} +'/remove'" method="post">-->
-<!--            <button class="btn btn-warning" type="submit">Удалить</button>-->
-<!--        </form>-->
-        <!--                <a th:href="'/blog/' + ${el.id} + 'remove'" class="=btn btn-warning">Удалить</a>-->
+        <img th:src="@{'../picsUp/'+${el.getImagePath()}}" alt="" width="100px" >
+    </div>
+</div><!--Container-->
+<div class="container">
+    <div class="card">
+        <img th:src="@{'../picsUp/'+${product.get(0).getImagePath()}}" alt="" width="200px" >
 
+        <div class="card-body">
+            <h4 th:text="${product.get(0).getName()}"></h4>
+            <h5 th:text="'Price '+${product.get(0).getPrice()}"></h5>
+        </div>
+        <div class="card-footer">
+            <a href="#" class="btn btn-outline-danger">Заказать</a>
+        </div>
     </div>
 
-
 </div>
+
+
 
 
 

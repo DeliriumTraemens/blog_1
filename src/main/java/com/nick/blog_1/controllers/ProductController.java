@@ -48,6 +48,8 @@ public class ProductController {
 	@GetMapping("/productEdit/{id}")
 	public String productEdit(@PathVariable(value = "id") long id, Model model) {
 		
+		model.addAttribute("categList", catRepo.findAll());
+		
 		model.addAttribute("curProd", productRepository.findById(id).get());
 		return "product-edit";
 	}

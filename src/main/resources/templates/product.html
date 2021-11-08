@@ -24,7 +24,10 @@
             <p th:text="'Id  '+${element.id}"></p>
             <p th:text="'CategoryId  '+${element.getCategoryId()}"></p>
           </div>
+          <a th:href="@{'/product/' + ${element.id}}">
+
           <img th:src="@{'../picsUp/'+${element.getImagePath()}}" alt="" width="100" height="200" class="card-img-top">
+          </a>
 
           <div class="card-body">
             <h3 th:text="${element.getName()}"/>
@@ -32,7 +35,7 @@
             <p th:text="${element.price}"/>
           </div><!--card body-->
           <div class="card-footer">
-            <a th:href="'/product/' + ${element.id}" class="=btn btn-sm btn-danger">Детальнее</a>
+            <a th:href="@{'/product/' + ${element.id}}" class="=btn btn-sm btn-danger">Детальнее!</a>
             <a th:href="'/productEdit/' + ${element.id}" class="=btn btn-sm btn-primary mb-2">Редактировать</a>
             <hr>
             <a th:href="'/productRemove/' + ${element.id}" class="=btn btn-sm btn-danger mb-2">Удалить</a>
@@ -51,28 +54,31 @@
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-        <div class="mb-4" th:each="el:${products}">
+        <div class="card-group m-4" th:each="el:${products}">
           <!--карточка-->
-          <div class="col">
             <div class="card shadow-sm">
-              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+             <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+              <a th:href="@{'/product/' + ${el.id}}">
+
+              <img th:src="@{'../picsUp/'+${el.getImagePath()}}" alt="" width="100%" height="225" class="card-img-top">
+              </a>
+
 
               <div class="card-body">
                 <h4 class="lead text-muted" th:text="${el.name}" />
                 <p class="card-text" th:text="${el.description}"/>
-                <p class="card-text" th:text="${el.price}"/>
+                <p class="card-text" th:text="'Price '+${el.price}"/>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <a th:href="'/blog/' + ${el.id}" class="btn btn-sm btn-outline-primary">View</a>
-                    <a th:href="'/blog/' + ${el.id} + '/edit'" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a th:href="'/product/' + ${el.id}" class="btn btn-sm btn-outline-primary">View</a>
+                    <a th:href="'/productEdit/' + ${el.id}" class="btn btn-sm btn-outline-secondary">Edit-n</a>
+<!--                    <a th:href="'/product/' + ${el.id} + '/edit'" class="btn btn-sm btn-outline-secondary">Edit</a>-->
                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                   </div>
-                  <small class="text-muted">9 mins</small>
                 </div>
               </div>
             </div>
-          </div>
         </div>
 
       </div>

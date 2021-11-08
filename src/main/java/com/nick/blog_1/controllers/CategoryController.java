@@ -2,6 +2,7 @@ package com.nick.blog_1.controllers;
 
 import com.nick.blog_1.models.Category;
 import com.nick.blog_1.repo.CategoryRepository;
+import com.nick.blog_1.repo.ProductRepository;
 import com.nick.blog_1.service.PathMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,9 @@ public class CategoryController {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	ProductRepository productRepository;
 	
 	@Autowired
 	private PathMaker pm;
@@ -213,6 +217,8 @@ public class CategoryController {
 		}
 		model.addAttribute("subcategories", categoryRepository.findByParentId(id));
 		model.addAttribute("parentName",categoryRepository.findById(id).get().getName());
+		
+		model.addAttribute("items", productRepository.findByCategoryId(id));
 		model.addAttribute("title","Подкатегории");
 		return "/subcategory";
 	}

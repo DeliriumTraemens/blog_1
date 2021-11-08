@@ -14,7 +14,49 @@
 <header th:insert="blocks/header :: header"></header>
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-        <div class="col">Левый</div>
+        <div class="col">Левый
+           <!-- <table>tabble
+                <tbody>
+                <tr th:each="ka:${categList}">
+                    <td th:text="${ka.getName()}"></td>
+                </tr>
+                </tbody>
+            </table>-->
+            <hr>
+            <hr>
+            <form action="#" method="get">
+                <select name="categoria" id="categoria" >
+                    <option th:each="ka:${categList}" th:if="${ka.getParentId()==0}" th:value="${ka.getId()}"  th:text="${ka.getName()}">
+                    </option>
+                </select>
+                <hr>
+                <hr>
+                <ul th:each="kkk:${categList}">
+                    <li th:if="${kkk.getParentId()==0}" th:text="${kkk.getName()}">
+
+                    </li>
+                </ul>
+                <hr>
+                <hr>
+                <ul>
+                    <li>ss</li>
+                    <li>aas
+                        <ul>
+                            <li>aa</li>
+                            <li>bb</li>
+                            <li>cc</li>
+                        </ul>
+                    </li>
+                    <li>ss</li>
+                </ul>
+
+
+                <button type="submit">Select</button>
+            </form>
+        <div>
+
+        </div>
+        </div>
         <div class="col">Центр
 
             <form method="post" action="/productEdit" enctype="multipart/form-data">
@@ -72,7 +114,10 @@
             </form>
 
         </div><!--col CENTER-->
-        <div class="col">Правый</div>
+        <div class="col">Правый
+            <img th:src="@{'../picsUp/'+${curProd.getImagePath()}}" alt="" class="card-img-top">
+
+        </div><!--Правый-->
     </div>
 </div>
 </body>

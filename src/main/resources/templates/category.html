@@ -54,7 +54,10 @@
             <div class="card-group mb-4" th:each="cat:${categoryList}">
                 <!--карточка-->
                     <div class="card shadow-sm mr-3">
+                        <a th:href="@{'/subcategory/' + ${cat.id}}">
+
                             <img th:src="@{'../picsUp/'+${cat.getImagePath()}}" alt="" width="100" height="200" class="card-img-top">
+                        </a>
 
                         <div class="card-body">
                             <h4 class="lead text-muted" th:text="${cat.name}" />
