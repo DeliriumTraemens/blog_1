@@ -4,11 +4,9 @@ import com.nick.blog_1.models.Category;
 import com.nick.blog_1.repo.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PathMaker {
@@ -67,6 +65,23 @@ public class PathMaker {
 //	directoryPathMkDir /D:/docs/pics/blog/Тушка/Кумпол/
 //	transferPath /D:/docs/pics/blog//Тушка/Кумпол/morda.jpg
 //	upload.path /D:/docs/pics/blog
+	
+	public ArrayList<List> catalogList()
+	{
+		Iterable<Category> topLevelCat = categoryRepository.findByParentId(0L);//Start array
+		LinkedList<List> currLevel = new LinkedList<>();
+		ArrayList<List> branch=new ArrayList<>();
+		
+		for (Category cat : topLevelCat) {
+			currLevel.addFirst(Collections.singletonList(categoryRepository.findByParentId(cat.getId())));
+		}
+		
+		for (int i = 0; i<currLevel.size();i++){
+			branch.add(currLevel.get(i));
+		}
+		
+		return branch;
+	}
 	
 	//------- SERVICE ------------//\\
 }

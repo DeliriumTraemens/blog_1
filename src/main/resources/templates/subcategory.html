@@ -37,11 +37,14 @@
                  <p th:text="${el.description}" />
                  <div class="card-footer">
                      <div class="d-grid gap-1 col-10 mx-auto">
-                         <a th:href="@{'/subcategory/' + ${el.id}}"     class="=btn btn-sm btn-warning mb-2">Субкатегории</a>
+                         <a th:href="@{'/subcategory/' + ${el.id}}"  class="=btn btn-sm btn-warning mb-2">Субкатегории</a>
                          <a th:href="'/category/' + ${el.id}"        class="=btn btn-sm btn-info mb-2" >Добавить подкатегорию</a>
                          <a th:href="'/categoryEdit/' + ${el.id}"    class="=btn btn-sm btn-primary mb-2">Редактировать</a>
                          <hr>
-                         <a th:href="'/categoryRemove/' + ${el.id}" class="btn btn-sm btn-danger mb-2">Удалить</a>
+                         <a th:href="'/categoryRemove/' + ${el.id}"  class="btn btn-sm btn-danger mb-2">Удалить</a>
+                         <hr>
+                         <a th:href="'/category/product-add/' + ${el.id}" class="btn btn-sm btn-warning mb-2">Добавить товар</a>
+
                      </div>
                  </div>
              </div>

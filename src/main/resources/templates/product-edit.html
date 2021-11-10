@@ -14,16 +14,20 @@
 <header th:insert="blocks/header :: header"></header>
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-        <div class="col">Левый
-           <!-- <table>tabble
-                <tbody>
-                <tr th:each="ka:${categList}">
-                    <td th:text="${ka.getName()}"></td>
-                </tr>
-                </tbody>
-            </table>-->
+        <div class="col">Левый столбик
             <hr>
             <hr>
+            <div th:each="catal:${catalog}">
+                <div th:each="catl:${catal}" >
+                    <hr>
+                    <div th:each="cat:${catl}">
+                        <p>~~~~~~~~~~~</p>
+                        <div th:each="c:${cat}">
+                            <p th:text="'++'+${c.name}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <form action="#" method="get">
                 <select name="categoria" id="categoria" >
                     <option th:each="ka:${categList}" th:if="${ka.getParentId()==0}" th:value="${ka.getId()}"  th:text="${ka.getName()}">
@@ -106,6 +110,14 @@
                             <option value="3">3</option>
                             <option value="4">4</option>
                         </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="categoriList" class="col-form-label">Выбери номер категории</label>
+                        <select name="categoriList" id="categoriList">
+                        <option th:each="ka:${categList}"  th:value="${ka.getId()}" th:text="${ka.getName()}">
+                        </option>
+                    </select>
                     </div>
                     
                     <button type="submit" class="btn btn-warning shadow-sm">Внести изменения</button>

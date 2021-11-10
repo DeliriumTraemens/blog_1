@@ -33,12 +33,7 @@ public class MainController {
 	}
 
 
-@GetMapping("/product/add")
-public String productAdd (Model model){
-model.addAttribute("title", "Добавить Товар");
 
-return "product-add";
-}
 	
 	@GetMapping("/about")
 	public String about (Model model) {

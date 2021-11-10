@@ -147,16 +147,16 @@ public class Product
 		{
 		this.imagePath = imagePath;
 		}
-	
-	@Override
-	public String toString()
-		{
-		return "\nProduct{" +
-				       "id=" + id +
-				       ", name='" + name + '\'' +
-				       ", description='" + description + '\'' +
-				       ", price=" + price +
-				       ", imagePath='" + imagePath + '\'' +
-				       '}';
+		
+		@Override
+		public String toString() {
+			return "\nProduct{" +
+					       "id=" + id +
+					       ", categoryId=" + categoryId +
+					       ", name='" + name + '\'' +
+					       ", description='" + description + '\'' +
+					       ", price=" + price +
+					       ", imagePath='" + imagePath + '\'' +
+					       '}';
 		}
 	}

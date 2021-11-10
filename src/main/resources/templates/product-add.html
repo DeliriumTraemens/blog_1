@@ -12,6 +12,13 @@
 
 <div class="container mt-5 mb-5">
   <form action="/product/add" method="post">
+    <div class="mb-3">
+      <label for="categoriList" class="col-form-label">Выбери категорию</label>
+      <select name="categoriList" id="categoriList" class="form-select">
+        <option th:each="ka:${categoriesList}"  th:value="${ka.getId()}" th:text="${ka.getName()}">
+        </option>
+      </select>
+    </div>
     <input type="text" name="prodName" placeholder="Введите название товара" class="form-control"><br>
     <input type="text" name="prodDescription" placeholder="Введите описание товара" class="form-control"><br>
     <input type="text" name="prodPrice" placeholder="Введите Цену товара" class="form-control"><br>
