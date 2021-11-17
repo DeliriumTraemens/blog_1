@@ -17,18 +17,22 @@
         <div class="col">Левый столбик
             <hr>
             <hr>
-            <div th:each="catal:${catalog}">
-                <div th:each="catl:${catal}" >
-                    <hr>
-                    <div th:each="cat:${catl}">
-                        <p>~~~~~~~~~~~</p>
-                        <div th:each="c:${cat}">
-                            <p th:text="'++'+${c.name}"></p>
-                        </div>
-                    </div>
-                </div>
+
+            <p>aaaaaaaaa</p>
+
+            <div class="mb-3">
+
+                <div th:each="catl0:${catalogLevel}" >
+<!--                    <hr>-->
+                    <ul class="list-group mt-4 mb-2" th:text="${catl0.getKey()}"></ul>
+                     <li class="list-group-item" th:each="catl1:${catl0.getValue()}" th:text="${catl1.name} + ' ' + ${catl1.id}"></li>
+                </div><!--//extternal loop-->
+
+
             </div>
-            <form action="#" method="get">
+
+
+           <!-- <form action="#" method="get">
                 <select name="categoria" id="categoria" >
                     <option th:each="ka:${categList}" th:if="${ka.getParentId()==0}" th:value="${ka.getId()}"  th:text="${ka.getName()}">
                     </option>
@@ -56,11 +60,11 @@
 
 
                 <button type="submit">Select</button>
-            </form>
-        <div>
+            </form>-->
+        <div></div>
+        </div>
 
-        </div>
-        </div>
+
         <div class="col">Центр
 
             <form method="post" action="/productEdit" enctype="multipart/form-data">

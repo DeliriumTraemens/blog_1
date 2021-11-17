@@ -2,7 +2,6 @@ package com.nick.blog_1.controllers;
 
 import com.nick.blog_1.models.Category;
 import com.nick.blog_1.repo.CategoryRepository;
-import net.minidev.json.JSONUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -93,17 +90,55 @@ public class CategoryControllerTest {
 	}
 	
 	@Test
+	public void catalogTree(){
+		Iterable<Category> all = categoryRepository.findAll();
+		Set<Long> parentSet = new TreeSet<>();
+		
+		//Лист парентов
+		for (Category c:all){
+			parentSet.add(c.getParentId());
+		}
+		
+		//Идем по листу парентов
+		parentExtractor(parentSet);
+		
+		
+		/*Получаем категорию из массива по паренту, ложим в Лист
+		* Бухло Парент 0 Ид 5
+		*    Пивас   Парент 5 Ид 10
+		*       Лагер     Парент 10 Ид 15
+		*       Пильзень  Парент 10 Ид 15
+		*
+		* основная категория
+		*   массив потомков
+		*
+		* */
+		
+		for (Long idx:parentSet){
+		
+		}
+		
+		
+		
+	}//method end
+	
+	private Set<Long> parentExtractor(Set<Long> parentSet) {
+			Set<Long> childsParent = new TreeSet<>();//детские паренты
+		for (Long currId : parentSet) {
+			Optional<Category> byId = categoryRepository.findById(currId);//лист чилдренов данного парента
+		}
+		return childsParent;
+	}
+	
+	@Test
 	public void catalogBuilder(){
 		ArrayList<Category> all = (ArrayList<Category>) categoryRepository.findAll();//общий список
 		Set<Long>parentIdSet=new TreeSet<Long>();//список уникальных Парентов
-//		Map<String, Long> parentNamedList = new HashMap<String, Long>();
-		Map<String, Long> parentNamedList2 = new HashMap<String, Long>();
 		Map<String,Iterable> levelMap=new HashMap<String,Iterable>();
 		
 		//Получаем общий список
 		for (Category c:all){
 			parentIdSet.add(c.getParentId());
-//			parentNamedList.put(c.getName(), c.getParentId());
 		}
 		
 		
@@ -123,24 +158,14 @@ public class CategoryControllerTest {
 			System.out.println("Level map "+levelMap);
 			System.out.println("\n-------------^^^^^^^Level Map^^^^^^^-------------");
 			
-//			for (Category currentCategory:byParentId){
-//				parentNamedList2.put(currentCategory.getName(), currentCategory.getParentId());
-////					System.out.println("\n-------------++++++++++++++-------------");
-////					System.out.println("parentNamedList2 "+ parentNamedList2);
-////					System.out.println("\n-------------^^^^^^^^^^^^^^-------------");
-//			}
 			
 			
 		}
 		
 		System.out.println("\n\n------------------- Finish ---------------------");
-		System.out.println(levelMap);
+		System.out.println(levelMap.toString());
 		System.out.println("\n\n------------^^^^^^^ Finish ^^^^^^^--------------");
 		
-//		System.out.println("\n-------------++++++++++++++-------------");
-//		System.out.println("parentIdSet "+parentIdSet);
-//		System.out.println("parentNamedList2 "+ parentNamedList2);
-//		System.out.println("\n-------------^^^^^^^^^^^^^^-------------");
 		
 	}
 	

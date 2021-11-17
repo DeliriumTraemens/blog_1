@@ -1,0 +1,46 @@
+<div th:fragment="cardFrag(cardObj)" xmlns:th="http://www.thymeleaf.org">
+    <div class="card">
+        <div class="card-header" th:text="'Card name '+${cardObj.name}">Header</div>
+            <div class="card-body" th:text="'Card Descr '+${cardObj.description}">Body</div>
+
+<!--        <div    th:insert="blocks/fragments :: subList(listObj=${cardObj.getChildrenSet()})"></div>-->
+        <div    th:insert="blocks/fragments :: subListForCard(${cardObj})"></div>
+
+        <div class="card-footer">
+                    <button class="btn btn-outline-success">Submit</button>
+                </div>
+    </div>
+</div>
+
+<!--<div th:fragment="subList(listObj)" xmlns:th="http://www.thymeleaf.org">
+    <ul th:each="level0:${listObj}">
+        <li  th:text="${level0.name}"></li>
+        <li>Inner text top</li>
+
+        <ul th:each="level0Item:${level0.getChildrenSet()}" >
+            <li>Inner text</li>
+            <li th:text="${level0Item.name}">
+                <ul th:with="level1=${level0Item.getChildrenSet()}" th:insert="blocks/fragments::subList(${level1.getChildrenSet()})" th:remove="tag"></ul>
+            </li>
+        </ul>
+    </ul>
+</div>-->
+
+<div th:fragment="subListForCard(listObj)" th:remove="tag" xmlns:th="http://www.thymeleaf.org">
+    <ul th:each="entry:${listObj.getChildrenSet()}">
+        <li th:text="'En Name '+${entry.name}">
+        </li>
+        <ul th:include="blocks/fragments :: subListForCard(${entry})">
+        </ul>
+        <li >inner entry</li>
+
+    </ul>
+</div>
+
+
+<div th:fragment="commentThread" th:remove="tag" xmlns:th="http://www.thymeleaf.org">
+    <div th:each="comment : ${thread}" style="margin-left: 1em">
+        <span th:text="${comment.text}">Example comment</span>
+        <div th:with="thread = ${comment.comments}" th:include="fragments/comment.html :: commentThread" th:remove="tag" ></div>
+    </div>
+</div>

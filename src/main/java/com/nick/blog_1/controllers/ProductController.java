@@ -47,6 +47,8 @@ public class ProductController {
 	public String productEdit(@PathVariable(value = "id") long id, Model model) {
 		model.addAttribute("catalog",pm.catalogList());
 		
+		model.addAttribute("catalogLevel", pm.catalogBuilder());
+		
 		model.addAttribute("categList", catRepo.findAll());
 		
 		model.addAttribute("curProd", productRepository.findById(id).get());

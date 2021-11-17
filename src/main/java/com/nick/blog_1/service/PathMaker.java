@@ -83,5 +83,30 @@ public class PathMaker {
 		return branch;
 	}
 	
+	//catalog category builder
+	public Map<String, Iterable> catalogBuilder(){
+		ArrayList<Category> all = (ArrayList<Category>) categoryRepository.findAll();//общий список
+		Set<Long>parentIdSet=new TreeSet<Long>();//список уникальных Парентов
+		Map<String,Iterable> levelMap=new HashMap<String,Iterable>();
+		
+		//Получаем общий список
+		for (Category c:all){
+			parentIdSet.add(c.getParentId());
+		}
+		
+		for(Long parId:parentIdSet){
+			/*берем элемент и грузим лист категорий по этому паренту*/
+			Iterable<Category> byParentId = categoryRepository.findByParentId(parId);
+			
+			if(parId==0L){
+				levelMap.put("top", byParentId);
+			}else{
+				String levelName =categoryRepository.findById(parId).get().getName();
+				levelMap.put(levelName,byParentId);
+			}
+		}
+		return levelMap;
+	}
+	
 	//------- SERVICE ------------//\\
 }
