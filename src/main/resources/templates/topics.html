@@ -35,20 +35,22 @@
                     <hr>
                     <hr>
                     <!-- <div th:text="'ChildrenSet '+${topic.getChildrenSet()}"></div>-->
+                    <div    th:insert="blocks/fragments :: cardFrag(cardObj=${topic})"></div>
+
                     <hr>
-                    <ul th:each="child:${topic.getChildrenSet()}" class="list-group"> <!--Children List-->
-                        <!-- <li th:text="'Topic Id '+${child.id}"></li>-->
+                    <!--<ul th:each="child:${topic.getChildrenSet()}" class="list-group"> &lt;!&ndash;Children List&ndash;&gt;
+                        &lt;!&ndash; <li th:text="'Topic Id '+${child.id}"></li>&ndash;&gt;
                         <li th:text="'Topic name '+${child.name}+' '+${child.id}" class="list-group-item"></li>
-                        <ul th:each="child1:${child.getChildrenSet()}" class="list-group-flush"> <!--SubSet-->
-                            <!-- <li th:text="${child1.getId()}">1</li>-->
+                        <ul th:each="child1:${child.getChildrenSet()}" class="list-group-flush"> &lt;!&ndash;SubSet&ndash;&gt;
+                            &lt;!&ndash; <li th:text="${child1.getId()}">1</li>&ndash;&gt;
                             <li th:text="${child1.getName()} +' '+${child1.getId()}" class="list-group-item">2</li>
                             <br>
-                            <ul th:each="child2:${child1.getChildrenSet()}" class="list-group-numbered"> <!--SubSet2-->
-                                <!-- <li th:text="${child2.getId()}">1</li>-->
+                            <ul th:each="child2:${child1.getChildrenSet()}" class="list-group-numbered"> &lt;!&ndash;SubSet2&ndash;&gt;
+                                &lt;!&ndash; <li th:text="${child2.getId()}">1</li>&ndash;&gt;
                                 <li th:text="${child2.getName()} +' '+${child2.getId()}" class="list-group-item">2</li>
                             </ul>
                         </ul>
-                    </ul>
+                    </ul>-->
                     <hr>
 
                 </div>

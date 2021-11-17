@@ -94,9 +94,13 @@
                                 <div th:text="'Name '+${childTopic.getName()}"></div>
                                 <div th:text="'Description '+${childTopic.getDescription()}"></div>
                                 <hr>
-                                <div th:text="'Parent obj: '+${childTopic.getParentTopic().getName()}"></div>
+<!--                                <div th:text="'Parent obj: '+${childTopic.getParentTopic().getName()}"></div>-->
+
                                 <hr>
-                                <div th:text="${childTopic.getChildrenSet()}"></div>
+<!--                                <div th:text="${childTopic.getChildrenSet()}"></div>-->
+                                <div    th:insert="blocks/fragments :: cardFrag(cardObj=${childTopic})"></div>
+<!--                                <div    th:insert="blocks/fragments :: cardFrag(${childTopic.getChildrenSet()})"></div>-->
+
                                 <hr>
 
                                 <!---->

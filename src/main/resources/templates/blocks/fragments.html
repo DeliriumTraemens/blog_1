@@ -1,10 +1,13 @@
 <div th:fragment="cardFrag(cardObj)" xmlns:th="http://www.thymeleaf.org">
-    <div class="card">
+    <div class="card shadow-sm m-2">
         <div class="card-header" th:text="'Card name '+${cardObj.name}">Header</div>
-            <div class="card-body" th:text="'Card Descr '+${cardObj.description}">Body</div>
+<!--            <div class="card-body" th:text="'Topic Contents: '+${cardObj.description}">Body</div>-->
+            <div class="card-body">Table of Contents:
+                <div th:insert="blocks/fragments :: subListForCard(${cardObj})"></div>
+
+            </div>
 
 <!--        <div    th:insert="blocks/fragments :: subList(listObj=${cardObj.getChildrenSet()})"></div>-->
-        <div    th:insert="blocks/fragments :: subListForCard(${cardObj})"></div>
 
         <div class="card-footer">
                     <button class="btn btn-outline-success">Submit</button>
@@ -12,28 +15,15 @@
     </div>
 </div>
 
-<!--<div th:fragment="subList(listObj)" xmlns:th="http://www.thymeleaf.org">
-    <ul th:each="level0:${listObj}">
-        <li  th:text="${level0.name}"></li>
-        <li>Inner text top</li>
-
-        <ul th:each="level0Item:${level0.getChildrenSet()}" >
-            <li>Inner text</li>
-            <li th:text="${level0Item.name}">
-                <ul th:with="level1=${level0Item.getChildrenSet()}" th:insert="blocks/fragments::subList(${level1.getChildrenSet()})" th:remove="tag"></ul>
-            </li>
-        </ul>
-    </ul>
-</div>-->
 
 <div th:fragment="subListForCard(listObj)" th:remove="tag" xmlns:th="http://www.thymeleaf.org">
-    <ul th:each="entry:${listObj.getChildrenSet()}">
-<!--        <li th:text="'En Name '+${entry.name}"></li>-->
-        <li th:text="${entry.name}"></li>
-            <ul th:include="blocks/fragments :: subListForCard(${entry})"></ul>
-<!--        <li >inner entry</li>-->
+    <div class="list-group" style="margin-left: 0.75em" th:each="entry:${listObj.getChildrenSet()}">
+        <a th:href="'/topic/details/'+${entry.getId()}" class="list-group">
+            <div th:text="${entry.name}"> </div>
+        </a>
 
-    </ul>
+            <div  th:include="blocks/fragments :: subListForCard(${entry})"></div>
+    </div>
 </div>
 
 
