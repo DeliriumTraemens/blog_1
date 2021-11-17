@@ -28,11 +28,10 @@
 
 <div th:fragment="subListForCard(listObj)" th:remove="tag" xmlns:th="http://www.thymeleaf.org">
     <ul th:each="entry:${listObj.getChildrenSet()}">
-        <li th:text="'En Name '+${entry.name}">
-        </li>
-        <ul th:include="blocks/fragments :: subListForCard(${entry})">
-        </ul>
-        <li >inner entry</li>
+<!--        <li th:text="'En Name '+${entry.name}"></li>-->
+        <li th:text="${entry.name}"></li>
+            <ul th:include="blocks/fragments :: subListForCard(${entry})"></ul>
+<!--        <li >inner entry</li>-->
 
     </ul>
 </div>
