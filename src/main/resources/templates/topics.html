@@ -28,33 +28,22 @@
                 </div>
                 <div class="card-body">
                   <!--  <div th:text="${topic}"></div>-->
-                     <div th:text="'Topic name: '+${topic.name}+' Id: '+${topic.id}"></div>
-                    <div th:text="'Topic Id '+${topic.id}"></div>
-                    <div th:text="'Parent ID: ' + ${topic.getParentId()}"></div>
-                    <div th:text="'Parent Obj: ' + ${topic.getParentTopic()}"></div>
+                    <div class="card shadow-sm">
+                        <div th:text="'Topic name: '+${topic.name}+' Id: '+${topic.id}"></div>
+                        <div th:text="'Topic Id '+${topic.id}"></div>
+                        <div th:text="'Parent ID: ' + ${topic.getParentId()}"></div>
+                        <div th:text="'Parent Obj: ' + ${topic.getParentTopic()}"></div>
+                    </div>
                     <hr>
                     <hr>
-                    <!-- <div th:text="'ChildrenSet '+${topic.getChildrenSet()}"></div>-->
                     <div    th:insert="blocks/fragments :: cardFrag(cardObj=${topic})"></div>
 
                     <hr>
-                    <!--<ul th:each="child:${topic.getChildrenSet()}" class="list-group"> &lt;!&ndash;Children List&ndash;&gt;
-                        &lt;!&ndash; <li th:text="'Topic Id '+${child.id}"></li>&ndash;&gt;
-                        <li th:text="'Topic name '+${child.name}+' '+${child.id}" class="list-group-item"></li>
-                        <ul th:each="child1:${child.getChildrenSet()}" class="list-group-flush"> &lt;!&ndash;SubSet&ndash;&gt;
-                            &lt;!&ndash; <li th:text="${child1.getId()}">1</li>&ndash;&gt;
-                            <li th:text="${child1.getName()} +' '+${child1.getId()}" class="list-group-item">2</li>
-                            <br>
-                            <ul th:each="child2:${child1.getChildrenSet()}" class="list-group-numbered"> &lt;!&ndash;SubSet2&ndash;&gt;
-                                &lt;!&ndash; <li th:text="${child2.getId()}">1</li>&ndash;&gt;
-                                <li th:text="${child2.getName()} +' '+${child2.getId()}" class="list-group-item">2</li>
-                            </ul>
-                        </ul>
-                    </ul>-->
+
                     <hr>
 
                 </div>
-                <div class="card-footer">
+                <div class="card-footer shadow-sm">
                     <a th:href="'/topic/details/'+${topic.id}" class="btn btn-outline-danger">Детальнее</a>
                 </div>
             </div>

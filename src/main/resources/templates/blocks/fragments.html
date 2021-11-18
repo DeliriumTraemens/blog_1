@@ -22,7 +22,7 @@
             <div th:text="${entry.name}"> </div>
         </a>
 
-            <div  th:include="blocks/fragments :: subListForCard(${entry})"></div>
+            <div  th:insert="blocks/fragments :: subListForCard(${entry})"></div>
     </div>
 </div>
 
